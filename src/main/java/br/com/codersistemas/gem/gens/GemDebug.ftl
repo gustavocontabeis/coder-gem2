@@ -1,8 +1,6 @@
-Olá: ${app.appName}
+Title: ${title}
 
-${title} 2
-
-${hoje?string('dd.MM.yyyy HH:mm:ss')}
+Agora: ${hoje?string('dd.MM.yyyy HH:mm:ss')}
 
 AppName:        ${app.appName}
 Database:       ${app.database}

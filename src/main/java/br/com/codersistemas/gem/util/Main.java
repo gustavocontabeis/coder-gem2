@@ -25,19 +25,20 @@ public class Main {
 				.build();
 
 		app.addClasses(
-				br.com.codersistemas.condominiosadm.domain.Apartamento.class, 
-				br.com.codersistemas.condominiosadm.domain.Banco.class, 
-				br.com.codersistemas.condominiosadm.domain.Banco2.class, 
-				br.com.codersistemas.condominiosadm.domain.BancoLancamento.class,
-				br.com.codersistemas.condominiosadm.domain.Bloco.class, 
-				br.com.codersistemas.condominiosadm.domain.Boleto.class, 
-				br.com.codersistemas.condominiosadm.domain.Caixa.class, 
-				br.com.codersistemas.condominiosadm.domain.CentroDeCusto.class,
-				br.com.codersistemas.condominiosadm.domain.Condominio.class, 
-				br.com.codersistemas.condominiosadm.domain.Faturamento.class, 
-				br.com.codersistemas.condominiosadm.domain.Morador.class, 
-				br.com.codersistemas.condominiosadm.domain.Pessoa.class, 
-				br.com.codersistemas.condominiosadm.domain.Sindico.class);
+//				br.com.codersistemas.condominiosadm.domain.Apartamento.class, 
+//				br.com.codersistemas.condominiosadm.domain.Banco.class, 
+//				br.com.codersistemas.condominiosadm.domain.Banco2.class, 
+//				br.com.codersistemas.condominiosadm.domain.BancoLancamento.class,
+//				br.com.codersistemas.condominiosadm.domain.Bloco.class, 
+//				br.com.codersistemas.condominiosadm.domain.Boleto.class, 
+//				br.com.codersistemas.condominiosadm.domain.Caixa.class, 
+//				br.com.codersistemas.condominiosadm.domain.CentroDeCusto.class,
+//				br.com.codersistemas.condominiosadm.domain.Condominio.class, 
+//				br.com.codersistemas.condominiosadm.domain.Faturamento.class, 
+//				br.com.codersistemas.condominiosadm.domain.Morador.class, 
+//				br.com.codersistemas.condominiosadm.domain.Pessoa.class, 
+//				br.com.codersistemas.condominiosadm.domain.Sindico.class
+				);
 		
 		java.util.Map<String, Object> input = new HashMap<String, Object>();
 

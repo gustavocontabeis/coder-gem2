@@ -6,18 +6,30 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 
+import br.com.codersistemas.gem.exceptions.GemException;
+import br.com.codersistemas.gem.gens.GemDebug;
+import br.com.codersistemas.gem.gens.be.GemController;
+import br.com.codersistemas.gem.gens.be.GemPojo;
+import br.com.codersistemas.gem.gens.be.GemRepository;
+import br.com.codersistemas.gem.gens.be.GemService;
+import br.com.codersistemas.gem.gens.fe.AngularComponentFormHtml;
+import br.com.codersistemas.gem.gens.fe.AngularComponentFormTS;
 import br.com.codersistemas.gem.model.App;
 import br.com.codersistemas.gem.model.Attribute;
 import br.com.codersistemas.gem.model.CamelCase;
 import br.com.codersistemas.gem.model.Model;
 import br.com.codersistemas.gem.model.Name;
 import br.com.codersistemas.gem.model.Type;
+import br.com.codersistemas.libs.utils.FileUtil;
 import freemarker.core.ParseException;
 import freemarker.template.Configuration;
 import freemarker.template.MalformedTemplateNameException;
@@ -31,12 +43,17 @@ public class CoderGemTests {
 	
 	private Class[] classes = {};
 	private App app;
+	private int index = 4;
+	private Model model;
+	private java.util.Map<String, Object> input;
 	
-	{
+	@Before
+	public void testBeforeEach(){
+		System.out.println(">>> testBeforeEach");
 		app = App.builder()
-				.appName("pizzaria")
-				.defaultPackage("br.com.codersistemas.condominio")
-				.schema("schema")
+				.appName("condominios-adm-api")
+				.defaultPackage("br.com.codersistemas.condominiosadm")
+				.schema("public")
 				.database("database")
 				.models(new ArrayList<Model>())
 				.build();
@@ -54,11 +71,20 @@ public class CoderGemTests {
 				br.com.codersistemas.condominiosadm.domain.Faturamento.class,
 				br.com.codersistemas.condominiosadm.domain.Morador.class,
 				br.com.codersistemas.condominiosadm.domain.Pessoa.class,
-				br.com.codersistemas.condominiosadm.domain.Sindico.class);
+				br.com.codersistemas.condominiosadm.domain.Sindico.class
+			);
+		
+		model = app.getModels().get(index);
+		input = new HashMap<String, Object>();
+		input.put("title", "Exemplo Gem");
+		input.put("hoje", new Date());
+		input.put("app", app);
+		input.put("models", app.getModels());
+		input.put("model", model);
 	}
 	
 	@Test
-	public void testDebug() throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException{
+	public void testDebugModel() throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException{
 		System.out.println("AppName:        "+app.getAppName());
 		System.out.println("Database:       "+app.getDatabase());
 		System.out.println("DefaultPackage: "+app.getDefaultPackage());
@@ -117,5 +143,122 @@ public class CoderGemTests {
 		}
 		
 	}
+	
+	@Test
+	public void testGemDebugTemplete() throws GemException {
+		System.out.println("GemDebug");
+		System.out.println(new GemDebug(app, model, input).print());
+	}
+	
+	@Test
+	public void testGerarPojo() throws GemException {
+		System.out.println("GemPojo");
+		System.out.println(new GemPojo(app, model, input).print());
+	}
+	
+	@Test
+	public void testGerarPojos() throws GemException {
+		System.out.println("GemPojos");
+		app.getModels().forEach(m->{try {
+			FileUtil.write(new File("/home/gustavo/dev/workspace-coder/condominios-adm-api-copy/src/main/java/br/com/codersistemas/condominiosadm/domain", m.getName().getName()+".java"), new GemPojo(app, m, input).print());
+		} catch (IOException | GemException e) {
+			e.printStackTrace();
+		}});
+	}
+	
+	@Test
+	public void testGerarDTO() throws GemException {
+		
+	}
+	
+	@Test
+	public void testGerarAdapter() throws GemException {
+		
+	}
 
+	@Test
+	public void testGerarBuilder() throws GemException {
+		
+	}
+
+	@Test
+	public void testGerarDDLPostgres() throws GemException {
+		
+	}
+	
+	@Test
+	public void testGerarSQLInserts() throws GemException {
+		
+	}
+
+	@Test
+	public void testGerarRepository() throws Exception {
+		System.out.println("Repository");
+		System.out.println(new GemRepository(app, model, input));
+	}
+	
+	@Test
+	public void testGerarRepositoryTest() {
+		
+	}
+	
+	@Test
+	public void testGerarService() throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+		System.out.println("Service");
+		System.out.println(new GemService(app, model, input));
+	}
+	
+	@Test
+	public void testGerarServiceTest() {
+		
+	}
+	
+	@Test
+	public void testGerarRestController() throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+		System.out.println("Controller");
+		System.out.println(new GemController(app, model, input));
+	}
+	
+	@Test
+	public void testGerarRestControllerTestesPostman() {
+		// gerar URL
+		// Gerar body post
+	}
+
+	@Test
+	public void testGerarAngularCliCode() {
+		
+	}
+	
+	@Test
+	public void testGerarTSClass() throws Exception {
+		
+	}
+	
+	@Test
+	public void testGerarNGModule() throws Exception {
+		
+	}
+	
+	@Test
+	public void testGerarNGService() throws Exception {
+		
+	}
+
+	@Test
+	public void testGerarAngularComponentFormHtml() throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+		System.out.println("AngularComponentFormHtml");
+		System.out.println(new AngularComponentFormHtml(app, model, input));
+	}
+	
+	@Test
+	public void testGerarAngularComponentFormTS() throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+		System.out.println("AngularComponentFormTS");
+		System.out.println(new AngularComponentFormTS(app, model, input));
+	}
+
+	@Test
+	public void testGerarPrimeNGMenu() throws Exception {
+		
+	}
 }

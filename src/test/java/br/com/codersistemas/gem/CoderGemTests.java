@@ -1,5 +1,5 @@
 /*
-package br.com.codersistemas.gem;
+package br.com.codersistemas.condominiosadm;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -14,8 +14,11 @@ import java.util.Locale;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 import br.com.codersistemas.gem.exceptions.GemException;
+import br.com.codersistemas.gem.gens.GemAdapter;
+import br.com.codersistemas.gem.gens.GemDTO;
 import br.com.codersistemas.gem.gens.GemDebug;
 import br.com.codersistemas.gem.gens.be.GemController;
 import br.com.codersistemas.gem.gens.be.GemPojo;
@@ -69,6 +72,7 @@ public class CoderGemTests {
 				br.com.codersistemas.condominiosadm.domain.CentroDeCusto.class,
 				br.com.codersistemas.condominiosadm.domain.Condominio.class,
 				br.com.codersistemas.condominiosadm.domain.Faturamento.class,
+				br.com.codersistemas.condominiosadm.domain.Garagem.class,
 				br.com.codersistemas.condominiosadm.domain.Morador.class,
 				br.com.codersistemas.condominiosadm.domain.Pessoa.class,
 				br.com.codersistemas.condominiosadm.domain.Sindico.class
@@ -133,6 +137,10 @@ public class CoderGemTests {
 				System.out.println("    attribute.type.name.camelCase.uncapitalized:             "+attribute.getType().getName().getCamelCase().getUncapitalized());
 				System.out.println("    attribute.type.name.underlineCase:                       "+attribute.getType().getName().getUnderlineCase());
 				System.out.println("    attribute.type.simpleClassName:                          "+attribute.getType().getSimpleClassName());
+				System.out.println("    attribute.type.generic:                          "+attribute.getType().isGeneric());
+				if(attribute.getType().getGenericType() != null) {
+					System.out.println("    attribute.type.genericType.name.name:                    "+attribute.getType().getGenericType().getName().getName());
+				}
 				System.out.println("    attribute.type.isCollection:                             "+attribute.getType().isCollection());
 				System.out.println("    attribute.type.isPrimitive:                              "+attribute.getType().isPrimitive());
 				System.out.println("    attribute.type.name:                                     "+attribute.getType().getName());
@@ -168,11 +176,12 @@ public class CoderGemTests {
 	
 	@Test
 	public void testGerarDTO() throws GemException {
-		
+		System.out.println(new GemDTO(app, model, input).print());
 	}
 	
 	@Test
 	public void testGerarAdapter() throws GemException {
+		System.out.println(new GemAdapter(app, model, input).print());
 		
 	}
 
@@ -262,4 +271,5 @@ public class CoderGemTests {
 		
 	}
 }
+
 */

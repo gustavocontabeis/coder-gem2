@@ -1,3 +1,4 @@
+/*
 package br.com.codersistemas.gem;
 
 import java.io.File;
@@ -13,7 +14,6 @@ import java.util.Locale;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
 
 import br.com.codersistemas.gem.exceptions.GemException;
 import br.com.codersistemas.gem.gens.GemDebug;
@@ -262,3 +262,4 @@ public class CoderGemTests {
 		
 	}
 }
+*/

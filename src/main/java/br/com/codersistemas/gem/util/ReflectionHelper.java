@@ -1,6 +1,7 @@
 package br.com.codersistemas.gem.util;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import br.com.codersistemas.gem.model.App;
 import br.com.codersistemas.gem.model.Name;
 import br.com.codersistemas.gem.model.Type;
+import br.com.codersistemas.libs.utils.ReflectionUtils;
 import lombok.Builder;
 
 public class ReflectionHelper {
@@ -37,7 +39,7 @@ public class ReflectionHelper {
 		} while (classe != Object.class && classe != null);
 		return list.toArray(new Field[list.size()]);
 	}
-
+	
 	public static Type getType(Field field, App app) {
 		
 		boolean isCollection = false;
@@ -48,15 +50,34 @@ public class ReflectionHelper {
 				break;
 			}
 		}
+		
+		Type genericType = null;
+		java.lang.reflect.Type genericTypeReflect = ReflectionUtils.getGenericType(field);
+		if(genericTypeReflect != null) {
+			Class genericClass = (Class) genericTypeReflect;
+			genericType = Type.builder()
+					.field(null)
+					.collection(false)
+					.name(new Name(genericClass.getSimpleName()))
+					.className(genericClass.getCanonicalName())
+					.simpleClassName(genericClass.getSimpleName())
+					.primitive(genericClass.isPrimitive())
+					.subtype(null)
+					.build();
+		}
+		
 		isCollection = isCollection || field.getType().isArray();
 		
 		Type type = Type.builder()
+				.field(field)
 				.collection(isCollection)
 				.name(new Name(field.getType().getSimpleName()))
 				.className(field.getType().getCanonicalName())
-				.simpleClassName(field.getType().getSimpleName())
+				.simpleClassName(field.getType().getSimpleName()+(genericType != null ? "<"+genericType.getName().getName()+">" : ""))
 				.primitive(field.getType().isPrimitive())
 				.subtype(subtype(field.getType()))
+				.generic(genericType != null)
+				.genericType(genericType)
 		.build();
 		
 		if(field.getType().isEnum()) {
@@ -126,5 +147,5 @@ public class ReflectionHelper {
 		}
 		build.setEnumValues(enumConstantsStr);
 	}
-
+	
 }

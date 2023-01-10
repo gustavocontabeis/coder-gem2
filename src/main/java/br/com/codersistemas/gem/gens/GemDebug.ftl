@@ -32,6 +32,10 @@ Schema:         ${app.schema}
     attribute.type.className:                ${attribute.type.className}
     attribute.type.simpleClassName:          ${attribute.type.simpleClassName}
     attribute.type.subtype:                  ${attribute.type.subtype!}
+    attribute.type.generic:                  ${attribute.type.generic?string('sim', 'não')}
+	<#if attribute.type.generic>
+        attribute.type.genericType.name.name:         ${(attribute.type.genericType.name.name)!}
+    </#if>
     attribute.type.collection:               ${attribute.type.collection?string('sim', 'não')}
     attribute.type.primitive:                ${attribute.type.primitive?string('sim', 'não')}
     attribute.type.fk:                       ${attribute.fk?string('sim', 'não')}
